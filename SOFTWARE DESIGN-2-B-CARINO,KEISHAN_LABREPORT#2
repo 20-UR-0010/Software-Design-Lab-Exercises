@@ -1,0 +1,270 @@
+#atmprogram
+from bank import Bank, createBank
+
+def main (fileName = None):
+    if not fileName:
+        bank =createBank()
+    else:
+        bank = Bank(fileName)
+    print(bank)
+    atm = ATM(bank)
+    atm.mainloop()
+
+class ATM(EasyFrame):
+    def __init__(self, bank):
+        EasyFrame.__init__(self, title ="ATM")
+        self.bank
+        self.account = None
+
+    def login(self):
+        name = self.nameField.getText()
+        pin = self.pinField.getText()
+        self.account = self.bank.get(name, pin)
+        if self.account:
+            self.statusField.setText("Hello, " + name)
+            self.balanceButton["state"] = "-Normal-"
+            self.depositButton["state"] = "-Normal-"
+            self.withdrawButton["state"] = "-Normal-"
+            self.loginButton["text"] = "Logout"
+            self.loginButton["command"] = self.logout
+        else:
+            self.statusField.setText("Cannot found your Name and PIN!")
+
+    def logout(self):
+
+        self.account = None
+        self.nameField.setText("")
+        self.pinField.setText("")
+        self.amountField.setNumber(0.0)
+        self.statusField.setText("Welcome!!!")
+        self.balanceButton["state"] = "Disabled"
+        self.depositButton["state"] = "Disabled"
+        self.withdrawButton["state"] = "Disabled"
+        self.loginButton["text"] = "Login"
+        self.loginButton["command"] = self.login
+
+    def getBalance(self):
+        balance = self.account.getBalance()
+        self.statusField.setText("Balance: Php" + str(balance))
+
+    def withdraw(self):
+        amount = self.ammountField.getNumber()
+        message = self.account.withdraw(amount)
+        if message:
+            self.statusField.setText(message)
+        else:
+            self.statusField.setText("Withdrawal successful!")
+
+class Bank(object):
+    def __init__(self):
+        self.accounts ={}
+    def __str__(self):
+        return '\n'.join(map(str, self.accounts.values()))
+    def makeKey(self, name, pin):
+        return name + "/" + pin
+    def add(self, account):
+        key =self.makeKey(account.getName(), account.getPIN())
+        self.accounts[key] =account
+    def remove(self, name, pin):
+        key =self.makeKey(name, pin)
+        return self.accounts.pop(key, None)
+    def get(self, name, pin):
+        key = self.makeKey(name, pin)
+        return self. accounts.get(key, None)
+    def computeInterest(self):
+        total = 0.0
+        for account in self.accounts.values():
+            total += account.computeInterest()
+        return total
+
+import pickle
+def save(self, fileName = None):
+        if fileName != None:
+            self.fileName = fileName
+        elif self.fileName ==None:
+            return
+        fileObj =open(self. fileName, "file1")
+        for account in self.accounts.values():
+            pickle.dump(account, fileObj)
+        fileObj.close()
+
+def __init__(self, fileName =None):
+    self.accounts = {}
+    self.fileName = fileName
+    if fileName != None:
+        fileObj = open(fileName, "file2")
+        while True:
+            try:
+                account =pickle.load(fileObj)
+                self.add(account)
+            except EOFError:
+                fileObj.close()
+                break
+
+
+def createBank():
+    return Nonefrom random import randint
+    
+ class SavingsAccount(object):
+   RATE = 0.02
+   def __init__(self, name, pin, balance = 0.0):
+       self.name =name
+       self.pin =pin
+       self.balance = balance
+   def __str__(self):
+       result = "Name: \n" + self.name + "\n"
+       result += "PIN: \n" + self.pin + "\n"
+       result += "Balance: \n" + str(self.balance)
+       return result
+   def getBalance(self):
+       return self.balance
+   def getName(self):
+       return self.name
+   def getPIN(self):
+       return self.pin
+   def deposit(self, amount):
+       self.balance += amount
+       return None
+   def withdraw(self, amount):
+       if amount <0:
+           return "Amount must be greater than Php 10.00"
+       elif self.balance < amount:
+           return "Insufficient Funds"
+       else:
+           self.balance -= amount
+           return None
+   def computeInterest(self):
+       interest = self.balance * SavingsAccount.RATE
+       self.deposit(interest)
+       return interest
+
+
+#diegame
+
+class Die:
+    def __init__(self):
+        self.value = 1
+    def roll(self):
+        self.value = randint(1, 6)
+    def getValue(self):
+        return self.value
+    def __str__(self):
+        return str(self.getValue())
+        
+from  die import Die
+
+class Player(object):
+    def __init__(self):
+        self.die_1 = Die()
+        self.die_2 = Die()
+        self.roll = []
+        self.roll_count =[]
+        self.first_roll = True
+        self.winner= False
+        self.loser = False
+    def str (self):
+        return self.roll
+    def roll_dice(self):
+        self.die_1.roll()
+        self.die_2.roll()
+        self.roll_count += 1
+        (v1,v2) = (self.die_1.getValue(), self.die_2.getValue())
+        self.roll = str((v1, v2)) + "sum= " + str(v1+v2)
+        self.initialSum = v1+v2
+        if  self.initialSum in (2,3,12):
+            self.loser = True
+        elif self.initialSum in (7,11):
+            self.winner = True
+        else:
+            laterSum = v1+v2
+        if laterSum ==7:
+            self.loser= True
+        elif laterSum == self.initialSum:
+            self.initialSum
+            self.winner = True
+            return (v1, v2)
+        def getNumberofrolls(self):
+            return self.roll_count
+        def awinner(self):
+            return self.winner
+        def aloser(self):
+            return self.loser
+        def play(self):
+            while not self.awinner() and not self.aloser():
+                rollDice = input ("Roll the dice")
+            self.roll_dice()
+        print(self)
+        if self.awinner():
+            print("you win!")
+        else:
+            print("you lose..")
+            return self.awinner()
+        def division(x, y):
+            try:
+                return x/y
+            except ZeroDivisionError:
+                return 0
+            def play_1_game():
+                player =Player()
+                while not player.awinner() and not player.aloser():
+                    player.play()
+        def play_games(number):
+            wins =0
+            loses= 0
+            winrolls= 0
+            lossrolls =0
+            for count in range(number):
+                player = Player()
+            won = player.play
+            
+#doctorprogram
+import random
+
+class View (EasyFrame):
+
+    def __init__(self, d):
+        EasyFrame.__init__(self)
+        self.doctor = d
+        self.doctor_label= self.addLabel(text = "Doctor", sticky ="W", row = 0, column =0)
+        self.doctor_field= self.addTextF(text= self.doctor.greeting(), row =0, column =1,width =100, columnspan= 2,state = "disabled")
+        self.patient_label= self.addLabel(text= "user", sticky ="w", row =1, column =0)
+        self.patient_field = self.addTextF(text=" ", sticky="NSEW", row=1, column=1, columnspan=2)
+        self.respond_button= self.addButton(text= "send", row =2, column = 0, command = self.respond)
+        self.leave_button = self.addButton(text="leave", row=2, column=1, command=self.leave)
+        self.new_button = self.addButton(text="new", row=2, column=2, command=self.new)
+    def respond(self):
+        self.doctor_field.setText(self.doctor.reply(self.patient_field.getText()))
+    def leave(self):
+        self.doctor_field.setText(self.doctor.signoff())
+        self.patient_field.setText("")
+    def new(self):
+        self.doctor_field.setText(self.doctor.greeting())
+        self.patient_field.setText("")
+
+class Doctor():
+    def __init__(self):
+        self.hedges = ("Please Tell Me More", "Many of my patients tell me the same thing", "Please continue")
+        self.qualifiers = ("why do you say that?", "you seem to think that", "please can you explain why?")
+        self.replacements ={"I": "you", "me":"you", "my":"your", "we":"you", "us":"you", "mine":"yours"}
+    def greeting(self):
+        return "Good day, What can I help you for?"
+    def signoff(self):
+        return "Thank You for consulting me"
+    def reply(self, sentence):
+        probability = random.randint(1, 4)
+        if probability ==1:
+            return random.choice(self.hedges)
+        else:
+            return random.choice(self.qualifiers) + self.changeP(sentence)
+    def changP(self, sentence):
+        words = sentence.split()
+        reply = []
+        for word in words:
+            reply.append(self.replacements.get(word, word))
+            return " ".join(reply)
+    def main():
+        d= Doctor()
+        v = View(d)
+        v.mainloop()
+
+        

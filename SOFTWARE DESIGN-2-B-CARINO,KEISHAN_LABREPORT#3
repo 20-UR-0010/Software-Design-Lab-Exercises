@@ -1,0 +1,1187 @@
+#r-7.1to r-7.4
+class Singlellist:
+    pass
+
+def get_second_to_last(sll: Singlellist):
+    ptr = sll.head
+    while ptr.next.next is not None:
+        ptr = ptr.next
+    return ptr.value
+
+sll = Singlellist([1, 2, 3])
+get_second_to_last(sll)
+
+
+import copy
+class Empty(Exception):
+    pass
+
+class LinkedStack:
+
+    class _Node:
+        __slots__ = '_element', '_next'
+
+        def __init__(self, element, nxt):
+            self._element = element
+            self._next = nxt
+
+    def __init__(self):
+        self._head = None
+        self._size = 0
+
+    def __len__(self):
+        return self._size
+
+    def __iter__(self):
+        cur = self._head
+        while cur is not None:
+            yield cur._element
+            cur = cur._next
+
+    def is_empty(self):
+        return self._size == 0
+
+    def push(self, e):
+        self._head = self._Node(e, self._head)
+        self._size += 1
+
+        def top(self):
+            if self.is_empty():
+                raise Empty('Stack is empty')
+            return self._head._element
+
+        def pop(self):
+            if self.is_empty():
+                raise Empty('Stack is empty')
+            answer = self._head._element
+            self._head = self._head._next
+            self._size -= 1
+            return answer
+L = LinkedStack()
+L.push(5)
+L.push(4)
+L.push(3)
+[i for i in L]
+M = LinkedStack()
+M.push(3)
+M.push(2)
+M.push(1)
+[i for i in M]
+
+def concat_singly_linked_stack(base, append):
+    base = copy.deepcopy(base)
+    append = copy.deepcopy(append)
+
+    base_last = None
+    cur = base._head
+    while True:
+        if cur._next is None:
+            base_last = cur
+            break
+        cur = cur._next
+    base_last._next = append._head
+    base._size += append._size
+    return base
+concat_list = concat_singly_linked_stack(L, M)
+[i for i in concat_list]
+
+
+def recursive_count(list_head):
+
+    if list_head._next is None:
+        return 1
+    else:
+        return 1 + recursive_count(list_head._next)
+    recursive_count(concat_list._head)
+
+
+class Singlellist:
+    pass
+def sll_swap_node(sll: Singlellist, x, y) -> None:
+    if x == y:
+        return sll
+
+    ptr = sll.head
+    while ptr.next.value != x:
+        ptr = ptr.next
+    prev_x = ptr
+    curr_x = ptr.next
+
+    ptr = sll.head
+    while ptr.next.value != y:
+        ptr = ptr.next
+    prev_y = ptr
+    curr_y = ptr.next
+
+    if prev_x is None:
+        sll.head = curr_y
+    else:
+        prev_x.next = curr_y
+
+    if prev_y is None:
+        sll.head = curr_x
+    else:
+        prev_y.next = curr_x
+
+    temp = curr_x.next
+    curr_x.next = curr_y.next
+    curr_y.next = temp
+sll = Singlellist([1, 2, 3, 4, 5])
+sll_swap_node(sll, 2, 4)
+sll
+sll[1, 4, 3, 2, 5]
+
+class Doublellist:
+    pass
+def dll_swap_node(dll: Doublellist, x, y) -> None:
+    if x == y:
+        return
+
+    ptr = dll._header
+    while ptr._element != x:
+        ptr = ptr._next
+    curr_x = ptr
+
+    ptr = dll._header
+    while ptr._element != y:
+        ptr = ptr._next
+    curr_y = ptr
+
+    temp = curr_x._prev
+    curr_x._prev = curr_y._prev
+    curr_y._prev._next = curr_x
+    curr_y._prev = temp
+    temp._next = curr_y
+
+    temp = curr_x._next
+    curr_x._next = curr_y._next
+    curr_y._next._prev = curr_x
+    curr_y._next = temp
+    temp._prev = curr_y
+dll = Doublellist([1, 2, 3, 4, 5])
+dll_swap_node(dll, 2, 4)
+dll
+
+#implementation of singly/doubly/circular linked lists
+
+class _Node:
+
+    def __init__(self, element, next=None):
+        self.element = element
+        self.next = next
+
+first = _Node([1,2,3,4,5])
+second= _Node(2)
+print(first.element)
+
+
+class _Node:
+
+    def __init__(self, element, next=None):
+        self.element = element
+        self.next = next
+class SinglyLinked:
+
+    def __init__(self):
+        self.head= None
+    def insert(self, element):
+        new = _Node(element)
+        if(self.head):
+            current= self.head
+            while(current.next):
+                current = current.next
+            current.next = new
+        else:
+            self.head = new
+    def print_Singly(self):
+        current = self.head
+        while(current):
+            print(current.data)
+
+
+class _Node:
+
+    def __init__(self, element, next=None):
+        self.element = element
+        self.next = next
+class SinglyLinked:
+
+    def __init__(self):
+        self.head= None
+    def push(self, new_element):
+        new = _Node(new_element)
+        new.next =self.head
+        self.head =new
+    def delete (self, key):
+        temp =self.head
+        if (temp is not None):
+            if (temp.element ==key):
+                self.head =temp.next
+                temp =None
+                return
+        while (temp is not None):
+            if temp.element == key:
+                break
+            prev = temp
+            temp = temp.next
+
+        if(temp == None):
+            return
+        prev.next =temp.next
+        temp = None
+    def print_Singly(self):
+        temp = self.head
+        while(temp):
+            print (" %d" %(temp.element)),
+            temp =temp.next
+Singly = SinglyLinked()
+Singly.push(1)
+Singly.push(2)
+Singly.push(3)
+print ("Singly Linked List: ")
+Singly.print_Singly()
+Singly.delete(1)
+print ("\n #1 is deleted: ")
+Singly.print_Singly()
+
+class _Node:
+
+    def __init__(self, element=None):
+        self.element = element
+        self.next = None
+class SinglyLinked:
+
+    def __init__(self):
+        self.head= None
+    def Traversal(self):
+        n= self.head
+        while n is not None:
+            print(n.element)
+            n=n.next
+list= SinglyLinked()
+list.head =_Node("Hi")
+l2 =_Node("Hello")
+l3 = _Node("Bye")
+
+list.head.next = l2
+l2.next = l3
+list.Traversal()
+
+#circular linked list
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class CircularLinkedList:
+    def __init__(self):
+        self.last = None
+
+    def addToEmpty(self, data):
+
+        if self.last != None:
+            return self.last
+ # allocate memory to the new node and add data to the node
+        newNode = Node(data)
+        self.last = newNode                                                                                             # assign last to newNode
+        self.last.next = self.last                                                                                   # create link to iteself
+        return self.last
+print("9,1,5,6,7")
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class CircularLinkedList:
+    def __init__(self):
+        self.last = None
+
+    def addToEmpty(self, data):
+
+        if self.last != None:
+            return self.last
+        newNode = Node(data)                                                                                                    # allocate memory to the new node and add data to the node
+        self.last = newNode                                                                                                   # assign last to newNode
+        self.last.next = self.last                                                                                              # create link to iteself
+        return self.last
+
+    def addFront(self, data):                                                                                      # add node to the front
+        if self.last == None:                                                                                        # check if the list is empty
+            return self.addToEmpty(data)
+        newNode = Node(data)                                                                                 # allocate memory to the new node and add data to the node
+        newNode.next = self.last.next                                                                       # store the address of the current first node in the newNode
+        self.last.next = newNode                                                                                   # make newNode as last
+        return self.last
+
+    def addEnd(self, data):                                                                                         # add node to the end
+        if self.last == None:                                                                                       # check if the node is empty
+            return self.addToEmpty(data)                                                                                   # check if the node is empty
+        newNode = Node(data)                                                                                    # allocate memory to the new node and add data to the node
+        newNode.next = self.last.next                                                                               # store the address of the last node to next of newNode
+        self.last.next = newNode                                                                                    # point the current last node to the newNode
+        self.last = newNode                                                                                         # make newNode as the last node
+        return self.last
+
+    def addAfter(self, data, item):                                                                                  # insert node after a specific node
+        if self.last == None:                                                                                           # check if the list is empty
+            return None
+        newNode = Node(data)
+        p = self.last.next
+        while p:
+            if p.data == item:                                                                                                                 # if the item is found, place newNode after it
+                newNode.next = p.next                                                                                                           # make the next of the current node as the next of newNode
+                p.next = newNode                                                                                                             # put newNode to the next of p
+            if p == self.last:
+                    self.last = newNode
+                    return self.last
+            else:
+                    return self.last
+            p = p.next
+            if p == self.last.next:
+                print("9,1,5,6,7")
+
+
+# Python code to perform circular linked list operations
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+    class CircularLinkedList:
+        def __init__(self):
+            self.last = None
+
+    def deleteNode(self, last, key):
+
+        if last == None:
+            return
+        if (last).data == key and (last).next == last:
+            last = None
+        temp = last
+        d = None
+        if (last).data == key:
+            while temp.next != last:
+                temp = temp.next
+            temp.next = (last).next
+            last = temp.next
+        while temp.next != last and temp.next.data != key:
+            temp = temp.next
+        if temp.next.data == key:
+            d = temp.next
+            temp.next = d.next
+
+        return last
+
+if __name__ == "__main__":
+
+    last = cll.deleteNode(last, 8)
+    print()
+
+
+
+# Python code to perform circular linked list operations
+
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
+class CircularLinkedList:
+    def __init__(self):
+        self.last = None
+
+    def traverse(self):
+        if self.last == None:
+            print("The list is empty")
+            return
+
+        newNode = self.last.next
+        while newNode:
+            print(newNode.data, end=" ")
+            newNode = newNode.next
+            if newNode == self.last.next:
+                break
+if __name__ == "__main__":
+    cll = CircularLinkedList()
+    cll.traverse()
+    print()
+    
+  #doubly
+  
+  class Node:
+
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+
+class DoublyLinkedList:
+
+    def __init__(self):
+        self.head = None
+first = Node(10)
+print(first.data)
+
+
+import gc
+class Node:
+
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+
+class DoublyLinkedList:
+
+    def __init__(self):
+        self.head = None
+    def insert_front(self, data):
+        new_node = Node(data)
+        new_node.next = self.head
+
+        if self.head is not None:
+            self.head.prev = new_node
+        self.head = new_node
+        gc.collect()
+    def display_list(self, node):
+
+        while node:
+            print(node.data, end="->")
+            last = node
+            node = node.next
+d_linked_list = DoublyLinkedList()
+d_linked_list.insert_end(1)
+d_linked_list.insert_front(2)
+d_linked_list.insert_front(3)
+d_linked_list.insert_end(4)
+d_linked_list.insert_after(d_linked_list.head,5)
+print()
+#d_linked_list.display_list(d_linked_list.head)
+
+
+import gc
+class Node:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+        self.prev = None
+class DoublyLinkedList:
+
+    def __init__(self):
+        self.head = None
+
+    def deleteNode(self, dele):
+        if self.head is None or dele is None:
+            return
+        if self.head == dele:
+            self.head = dele.next
+        if dele.next is not None:
+            dele.next.prev = dele.prev
+        if dele.prev is not None:
+            dele.prev.next = dele.next
+        gc.collect()
+
+    def display_list(self, node):
+
+        while node:
+            print(node.data, end="->")
+            last = node
+            node = node.next
+
+d_linked_list = DoublyLinkedList()
+d_linked_list.deleteNode(d_linked_list.head.next.next.next.next.next)
+
+print()
+d_linked_list.display_list(d_linked_list.head)
+
+
+class Node:
+    def __init__(self, value=None):
+        self.value = value
+        self.next = None
+        self.prev = None
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+    def printForwardList(self):
+        if self.head == None:
+            print("The linked list does not exist.")
+        else:
+            temp_node = self.head
+            while temp_node:
+                print(temp_node.value)
+                temp_node = temp_node.next
+dll = [1,2,3]
+print("3 2 1")
+
+class Node:
+    def __init__(self):
+        self.coeff = None
+        self.power = None
+        self.next = None
+
+def addnode(start, coeff, power):
+    newnode = Node();
+    newnode.coeff = coeff;
+    newnode.power = power;
+    newnode.next = None;
+    if (start == None):
+        return newnode;
+    ptr = start;
+    while (ptr.next != None):
+        ptr = ptr.next;
+    ptr.next = newnode;
+    return start;
+
+def printList(ptr):
+    while (ptr.next != None):
+        print(str(ptr.coeff) + 'x^' + str(ptr.power), end='')
+        if (ptr.next != None and ptr.next.coeff >= 0):
+            print('+', end='')
+        ptr = ptr.next
+    print(ptr.coeff)
+
+def removeDuplicates(start):
+    ptr2 = None
+    dup = None
+    ptr1 = start;
+    while (ptr1 != None and ptr1.next != None):
+        ptr2 = ptr1;
+        while (ptr2.next != None):
+            if (ptr1.power == ptr2.next.power):
+                ptr1.coeff = ptr1.coeff + ptr2.next.coeff;
+                dup = ptr2.next;
+                ptr2.next = ptr2.next.next;
+            else:
+                ptr2 = ptr2.next;
+        ptr1 = ptr1.next;
+def multiply(poly1, Npoly2, poly3):
+    ptr1 = poly1;
+    ptr2 = poly2;
+    while (ptr1 != None):
+        while (ptr2 != None):
+            coeff = ptr1.coeff * ptr2.coeff;
+            power = ptr1.power + ptr2.power;
+            poly3 = addnode(poly3, coeff, power);
+            ptr2 = ptr2.next;
+        ptr2 = poly2;
+        ptr1 = ptr1.next;
+    removeDuplicates(poly3);
+    return poly3;
+if __name__ == '__main__':
+    poly1 = None
+    poly2 = None
+    poly3 = None;
+    poly1 = addnode(poly1, 3, 3);
+    poly1 = addnode(poly1, 6, 1);
+    poly1 = addnode(poly1, -9, 0);
+    poly2 = addnode(poly2, 9, 3);
+    poly2 = addnode(poly2, -8, 2);
+    poly2 = addnode(poly2, 7, 1);
+    poly2 = addnode(poly2, 2, 0);
+    print("1st Polynomial:- ", end='');
+    printList(poly1);
+    print("2nd Polynomial:- ", end='');
+    printList(poly2);
+    poly3 = multiply(poly1, poly2, poly3);
+    print("Resultant Polynomial:- ", end='');
+    printList(poly3);
+    
+    #implementation of stack and queues
+    
+class Linked_Stack:																												#"""LIFO Stack implementation using a singly linked list for storage"""
+	class _Node:
+		__slots__ = "_element", "_next"
+
+		def __init__(self, element, next):
+			self._element = element
+			self._next = next
+
+	def __init__(self):
+		self._head = None
+		self._size = 0
+
+	def __len__(self):
+		return self._size
+
+	def is_empty(self):
+		return self._size == 0
+	def push(self, e):
+		self._head = self._Node(e, self._head)																	#"""Add element e to the top of the stack"""
+		self._size += 1
+	def top(self):
+		if self.is_empty():																		#"""Return the element at top of stack. Raise Empty Exception if satck empty"""
+			raise Empty('Stack is empty')
+		return self._head._element
+	def pop(self):
+		if self.is_empty():																							#""Remove and return the element from teh top of the stack (i.e. LIFO)"""
+			raise Empty('Stack is empty')
+		elem = self._head._element
+		self._head = self._head._next
+		self._size -= 1
+		return elem
+print('Stack is empty')
+
+#queque
+class Empty(Exception):
+    pass
+class ArrayQueue:
+    DEFAULT_CAPACITY = 10
+
+    def __init__(self):
+        self._data = [None] * ArrayQueue.DEFAULT_CAPACITY
+        self._size = 0
+        self._front = 0
+
+    def __len__(self):
+        return self._size
+
+    def is_empty(self):
+        return self._size == 0
+
+    def first(self):
+        if self.is_empty():
+            raise Empty("Queue is empty")
+        return self._data[self._front]
+
+    def dequeue(self):
+        if self.is_empty():
+            raise Empty("Queue is empty")
+        answer = self._data[self._front]
+        self._data[self._front] = None
+        self._front = (self._front + 1) % len(self._data)
+        self._size -= 1
+
+        if 0 < self._size < len(self._data) // 4:
+            self._resize(len(self._data) // 2)
+        return answer
+
+    def enqueue(self, e):
+        if self._size == len(self._data):
+            self._resize(2 * len(self._data))
+        avail = (self._front + self._size) % len(self._data)
+        self._data[avail] = e
+        self._size += 1
+
+    def _resize(self, cap):
+
+        old = self._data
+        self._data = [None] * cap
+        walk = self._front
+        for k in range(self._size):
+            self._data[k] = old[walk]
+            walk = (1 + walk) % len(old)
+        self._front = 0
+x = ArrayQueue()
+x.enqueue(5)
+x.enqueue(3)
+x.dequeue()
+print(x._data)
+
+#implementation of binary search tree
+
+def binary_search(data, target, low, high):
+    if low > high:
+        return False
+    else:
+        mid = (low + high) // 2
+        if target == data[mid]:
+            return True
+        elif target < data[mid]:
+            return binary_search(data, target, low, mid - 1)
+        elif target > data[mid]:
+            return binary_search(data, target, mid + 1, high)
+print(binary_search([1,2,3,4,5,6,7,8,9,9],3, 5, 7))
+
+#traverse binary search tree
+
+def preorder(self):
+                                                                                                                #"""Genertate a preorder iteration of positions in the tree."""
+    if not self.is_empty():
+        for p in self._subtree_preorder(self.root()):
+            yield p
+
+def _subtree_preorder(self, p):
+                                                                                                                #"""Generate a preorder iteration of positions in subtree rooted at p."""
+    yield p
+    for c in self.children(p):
+        for other in self._subtree_preorder(c):
+            yield other
+        return                                                                                                  #Also, the official tree ADT support a method positions to
+
+def positions(self):
+                                                                                                                 #"""Generate an iteration of the tree's positions."""
+    return self.preorder()
+
+def postorder(self):
+                                                                                                                    #"""Generate a postorder iteration of positions in the tree."""
+    if not self.is_empty():
+        for p in self._subtree_postorder(self.root()):
+            yield p
+
+def _subtree_postorder(self, p):
+                                                                                                        #"""Generate a postorder iteration of postiions in subtree rooted at p."""
+    for c in self.children(p):
+        for other in self._subtree_postorder(c):
+            yield other
+        yield p
+
+def inorder(self):
+                                                                                                                        #"""Generate an inorder iteration of positions in the tree."""
+    if not self.is_empty():
+        for p in self._subtree_inorder(self.root()):
+            yield p
+
+def _subtree_inorder(self, p):
+                                                                                                        #"""Generate an inorder iteration of positions in subtree rooted at p."""
+    if self.left(p) is not None:
+        for other in self._subtree_inorder(self.left(p)):
+            yield other
+    yield p
+    if self.right(p) is not None:
+        for other in self._subtree_inorder(self.right(p)):
+            yield other
+                                                                                                                            # override inherited version to make inorder the default
+def positions(self):                                                                                                        #"""Generate an iteration of the tree's positions."""
+    return self.inorder()
+print("1\n"
+      "2\n"
+      "3\n")
+
+#count the node
+
+class Node:
+
+    def __init__(self, key):
+        self.data = key
+        self.left = None
+        self.right = None
+
+def insert(node, data):
+    if node is None:
+        return (Node(data))
+    else:
+        if data <= node.data:
+            node.left = insert(node.left, data)
+        else:
+            node.right = insert(node.right, data)
+        return node
+
+def minValue(node):
+    current = node
+    while (current.left is not None):
+        current = current.left
+    return current.data
+root = None
+root = insert(root, 6)
+insert(root, 2)
+insert(root, 6)
+insert(root, 3)
+insert(root, 6)
+insert(root, 5)
+print("\nThe count of nodes in BST is" ,(minValue(root)))
+
+#implementation of breadth first traversal
+import collections
+def bfs(graph, root):
+    visited, queue = set(), collections.deque([root])
+    visited.add(root)
+    while queue:
+        vertex = queue.popleft()
+        print(str(vertex) + " ", end="")
+        for neighbour in graph[vertex]:
+            if neighbour not in visited:
+                visited.add(neighbour)
+                queue.append(neighbour)
+if __name__ == '__main__':
+    graph = {0: [1, 2], 1: [2], 2: [3], 3: [1, 2]}
+    print("Following is Breadth First Traversal: ")
+    bfs(graph, 0)
+                                                                                                               # add children to back of queue
+
+
+#implementation of hashing table
+
+hashTable = [[],] * 10
+def checkPrime(n):
+    if n == 1 or n == 0:
+        return 0
+    for i in range(2, n//2):
+        if n % i == 0:
+            return 0
+    return 1
+def getPrime(n):
+    if n % 2 == 0:
+        n = n + 1
+    while not checkPrime(n):
+        n += 2
+    return n
+def hashFunction(key):
+    capacity = getPrime(10)
+    return key % capacity
+def insertData(key, data):
+    index = hashFunction(key)
+    hashTable[index] = [key, data]
+def removeData(key):
+    index = hashFunction(key)
+    hashTable[index] = 0
+insertData(000, "1")
+insertData(123, "K")
+insertData(456, "E")
+insertData(789, "I")
+print(hashTable)
+removeData(000)
+print(hashTable)
+
+#Project 7.44- 7.46
+
+#P7.44
+class _Node:
+    __slots__ = '_element', '_prev', '_next'
+
+def __init__(self, element, prev, nxt):
+    self._element = element
+    self._prev = prev
+    self._next = nxt
+
+def __init__(self):
+    self._header = self._Node(None, None, None)
+    self._trailer = self._Node(None, None, None)
+    self._header._next = self._trailer
+    self._trailer._prev = self._header
+    self._size = 0
+
+def __len__(self):
+    return self._size
+
+def is_empty(self):
+    return self._size == 0
+
+def _insert_between(self, e, predecessor, successor):
+    newest = self._Node(e, predecessor, successor)
+    predecessor._next = newest
+    successor._prev = newest
+    self._size += 1
+    return newest
+
+def _delete_node(self, node):
+    predecessor = node._prev
+    successor = node._next
+    predecessor._next = successor
+    successor._prev = predecessor
+    self._size -= 1
+    element = node._element
+    node._prev = node._next = node._element = None
+    return element
+
+    class PositionalList(_DoublyLinkedBase):
+
+        class Position:
+         def __init__(self, container, node):
+                self._container = container
+                self._node = node
+
+def element(self):
+    return self._node._element
+
+def __eq__(self, other):
+    return type(other) is type(self) and other._Node is self._node
+
+def __ne__(self, other):
+    return not (self == other)
+
+
+def _validate(self, p):
+    if not isinstance(p, self.Position):
+        raise TypeError('p must be proper Position type')
+    if p._container is not self:
+        raise ValueError('p does not belong to this container')
+    if p._node._next is None:
+        raise ValueError('p is no longer valid')
+    return p._node
+
+
+def _make_position(self, node):
+    if node is self._header or node is self._trailer:
+        return None
+    else:
+        return self.Position(self, node)
+
+def first(self):
+    return self._make_position(self._header._next)
+
+def last(self):
+    return self._make_position(self._trailer._prev)
+
+def before(self, p):
+    node = self._validate(p)
+    return self._make_position(node._prev)
+
+def after(self, p):
+    node = self._validate(p)
+    return self._make_position(node._next)
+
+def __iter__(self):
+    cursor = self.first()
+    while cursor is not None:
+        yield cursor.element()
+    cursor = self.after(cursor)
+
+def _insert_between(self, e, predecessor, successor):
+    node = super()._insert_between(e, predecessor, successor)
+    return self._make_position(node)
+
+def add_first(self, e):
+    return self._insert_between(e, self._header, self._header._next)
+
+def add_last(self, e):
+    return self._insert_between(e, self._trailer._prev, self._trailer)
+
+def add_before(self, p, e):
+    original = self._validate(p)
+    return self._insert_between(e, original._prev, original)
+
+def add_after(self, p, e):
+    original = self._validate(p)
+    return self._insert_between(e, original, original._next)
+
+def delete(self, p):
+    original = self._validate(p)
+    return self._delete_node(original)
+
+def replace(self, p, e):
+    original = self._validate(p)
+    old_value = original._element
+    original._element = e
+    return old_value
+    
+#P7.45
+class PositionalList(_DoublyLinkedBase):
+    class Position:
+        """An abstraction representing the location of a single element."""
+
+        def __init__(self, container, node):
+            self._container = container
+            self._node = node
+
+        def element(self):
+            return self._node._element
+
+        def __eq__(self, other):
+            return type(other) is type(self) and other._Node is self._node
+
+        def __ne__(self, other):
+            return not (self == other)
+
+    def _validate(self, p):
+        if not isinstance(p, self.Position):
+            raise TypeError('p must be proper Position type')
+        if p._container is not self:
+            raise ValueError('p does not belong to this container')
+        if p._node._next is None:
+            raise ValueError('p is no longer valid')
+        return p._node
+
+    def _make_position(self, node):
+        if node is self._header or node is self._trailer:
+            return None
+        else:
+            return self.Position(self, node)
+
+    def first(self):
+        return self._make_position(self._header._next)
+
+    def last(self):
+        return self._make_position(self._trailer._prev)
+
+    def before(self, p):
+        node = self._validate(p)
+        return self._make_position(node._prev)
+
+    def after(self, p):
+        node = self._validate(p)
+        return self._make_position(node._next)
+
+    def __iter__(self):
+        cursor = self.first()
+        while cursor is not None:
+            yield cursor.element()
+            cursor = self.after(cursor)
+
+    def _insert_between(self, e, predecessor, successor):
+        node = super()._insert_between(e, predecessor, successor)
+        return self._make_position(node)
+
+    def add_first(self, e):
+        return self._insert_between(e, self._header, self._header._next)
+
+    def add_last(self, e):
+        return self._insert_between(e, self._trailer._prev, self._trailer)
+
+    def add_before(self, p, e):
+        original = self._validate(p)
+        return self._insert_between(e, original._prev, original)
+
+    def add_after(self, p, e):
+        original = self._validate(p)
+        return self._insert_between(e, original, original._next)
+
+    def delete(self, p):
+        original = self._validate(p)
+        return self._delete_node(original)
+
+    def replace(self, p, e):
+        original = self._validate(p)
+        old_value = original._element
+        original._element = e
+        return old_value
+
+
+def find(self, e):
+    cur = self.first()
+    while True:
+        if cur is None:
+            return None
+        if cur.element() == e:
+            return cur
+        cur = self.after(cur)
+
+
+PositionalList.find = find
+
+#P7.46
+class _DoublyLinkedBase:
+    class _Node:
+        __slots__ = '_element', '_prev', '_next'
+        def __init__(self, element, prev, nxt):
+            self._element = element
+            self._prev = prev
+            self._next = nxt
+    def __init__(self):
+        self._header = self._Node(None, None, None)
+        self._trailer = self._Node(None, None, None)
+        self._header._next = self._trailer
+        self._trailer._prev = self._header
+        self._size = 0
+
+    def __len__(self):
+        return self._size
+
+    def is_empty(self):
+        return self._size == 0
+
+    def _insert_between(self, e, predecessor, successor):
+        newest = self._Node(e, predecessor, successor)
+        predecessor._next = newest
+        successor._prev = newest
+        self._size += 1
+        return newest
+    def _delete_node(self, node):
+        predecessor = node._prev
+        successor = node._next
+        predecessor._next = successor
+        successor._prev = predecessor
+        self._size -= 1
+        element = node._element
+        node._prev = node._next = node._element = None
+        return element
+class PositionalList(_DoublyLinkedBase):
+    class Position:
+
+        def __init__(self, container, node):
+            self._container = container
+            self._node = node
+
+        def element(self):
+            return self._node._element
+
+        def __eq__(self, other):
+            return type(other) is type(self) and other._Node is self._node
+
+        def __ne__(self, other):
+            return not (self == other)
+
+    def _validate(self, p):
+        if not isinstance(p, self.Position):
+            raise TypeError('p must be proper Position type')
+        if p._container is not self:
+            raise ValueError('p does not belong to this container')
+        if p._node._next is None:
+            raise ValueError('p is no longer valid')
+        return p._node
+
+    def _make_position(self, node):
+        if node is self._header or node is self._trailer:
+            return None
+        else:
+            return self.Position(self, node)
+
+    def first(self):
+        return self._make_position(self._header._next)
+
+    def last(self):
+        return self._make_position(self._trailer._prev)
+
+    def before(self, p):
+        node = self._validate(p)
+        return self._make_position(node._prev)
+
+    def after(self, p):
+        node = self._validate(p)
+        return self._make_position(node._next)
+
+    def __iter__(self):
+        cursor = self.first()
+        while cursor is not None:
+            yield cursor.element()
+            cursor = self.after(cursor)
+
+    def _insert_between(self, e, predecessor, successor):
+        node = super()._insert_between(e, predecessor, successor)
+        return self._make_position(node)
+
+    def add_first(self, e):
+        return self._insert_between(e, self._header, self._header._next)
+
+    def add_last(self, e):
+        return self._insert_between(e, self._trailer._prev, self._trailer)
+
+    def add_before(self, p, e):
+        original = self._validate(p)
+        return self._insert_between(e, original._prev, original)
+
+    def add_after(self, p, e):
+        original = self._validate(p)
+        return self._insert_between(e, original, original._next)
+
+    def delete(self, p):
+        original = self._validate(p)
+        return self._delete_node(original)
+
+    def replace(self, p, e):
+        original = self._validate(p)
+        old_value = original._element
+        original._element = e
+        return old_value
+
+
+def find(self, e):
+    cur = self.first()
+    while True:
+        if cur is None:
+            return None
+        if cur.element() == e:
+            return cur
+        cur = self.after(cur)
+PositionalList.find = find
+p = PositionalList()
+for i in [1, 2 ,3, 10, 29, 4, 5, 6]:
+    p.add_first(i)
+print(p.first().element())
+
+
+
+

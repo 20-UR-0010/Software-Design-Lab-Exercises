@@ -1,0 +1,168 @@
+#r-4.1-r4.3
+
+#r-4.1
+#R-4.1Describe a recursive algorithm
+# for finding the maximum
+# element in a sequence, S, of n
+import numpy as np
+
+def max_recursive(seq, start):
+	if len(seq) == 1:
+		return seq[0]
+
+	if seq[start] <= seq[start + 1]:
+		del seq[start]
+
+	elif seq[start] > seq[start + 1]:
+		del seq[start + 1]
+	else:
+		return KeyError()
+
+	return max_recursive(seq, start)
+seq1 = np.random.randint(0, 10, size=(10,)).tolist()
+print("maximum of seq1 should be ", max(seq1))
+seq2 = np.random.randint(0, 100, size=(100,)).tolist()
+print("maximum of seq1 should be ", max(seq2))
+seq3 = np.random.randint(0, 1000, size=(1000,)).tolist()
+print("maximum of seq1 should be ", max(seq3))
+
+print("seq1: ", max_recursive(seq1, 0))
+print("seq2: ", max_recursive(seq2, 0))
+print("seq3: ", max_recursive(seq3, 0))
+
+#r-4.2
+#R-4.2Draw the recursion trace for the computation of power (2,5), using the traditional function implemented in Code Fragment 4.11.
+Recursion trace:
+
+power(2, 5) = return 2 x 2 x 2 x 2 x 2 = 32
+
+power(2, 4) = return 2 x 2 x 2 x 2 = 16
+
+power(2, 3)= return 2 x 2 x 2 = 8
+
+power(2, 2) = return 2 x 2 = 4
+
+power(2, 1) = return 2 x 1 = 2
+
+power(2, 0) = return 1
+
+#r-4.3
+#Draw the recursion trace for the computation of power (2,18), using the repeated squaring algorithm, as implemented in Code Fragment 4.12.
+
+power(2, 18) = return 512 * 512 = 262144
+
+power(2, 9) = return (16 16) 2 (because 9 % 2 = 1) = 512
+
+power(2, 4) = return 4 * 4 = 16
+
+power(2, 2) = return 2 * 2 = 4
+
+power(2, 1) = return (1 1) 2 (because 1 % 2 = 1) = 1
+
+power(2, 0) = return 1
+
+
+#Implementation of recursion
+#2.a
+#a. Write a short recursive Python function that finds the minimum and
+#maximum values in a sequence without using any loops.
+
+def find_max_min(S):
+	def lwr_bnd(S, n):
+		if n == 0:
+			return S[n]
+		else:
+			return min(S[n], lwr_bnd(S, n-1))
+	def uppr_bnd(S, n):
+		if n == 0:
+			return S[n]
+		else:
+			return max(S[n], uppr_bnd(S, n-1))
+	print(lwr_bnd(S, len(S)-1), uppr_bnd(S, len(S)-1))
+find_max_min([112,4,5,16,7,-1, 10])
+
+
+#2.b
+#b. Give a recursive algorithm to compute the product of two positive integers,
+#m and n, using only addition and subtraction.
+
+def prod(m, n):
+	if n == 0:
+		return 0
+	else:
+		return m + prod(m, n-1)
+print(prod(10,10))
+
+
+
+
+
+#2.c
+#c. Write a short recursive Python function that takes a character string s and
+#outputs its reverse. For example, the reverse of pots&pans would be
+#snap&stop
+
+def rec_reverse_string(s):
+    def helper(s, left, right):
+        if left < right:
+            s[left], s[right] = s[right], s[left]
+            return helper(s, left + 1, right - 1)
+        else:
+            return s
+
+    s_list = [char for char in s]
+    result = helper(s_list, 0, len(s_list) - 1)
+    return ''.join(result)
+
+print(rec_reverse_string('pots&pans'))
+
+#P-4.23
+import os
+def find(path, filename):
+	results = find
+	def helper(path, filename):
+		if os.path.isdir(path):
+			for f in os.listdir(path):
+				childpath = os.path.join(path, f)
+				if f == filename:
+					results.append(childpath)
+				else:
+					helper(childpath, filename)
+		else:
+			return None
+	helper(path, filename)
+	print(results)
+find('C:/Users/Kei Shan/PycharmProjects/SDlab4/P-4.23.py', 'C:/Users/Kei Shan/Desktop/SDLAB2')
+
+
+#P-4.26
+def move_disk(from_peg, to_peg):
+    to_peg.append(from_peg.pop())
+    print("************Status**************")
+    print("[a]: ", a)
+    print("[b]: ", b)
+    print("[c]: ", c)
+
+
+def hanoi(n, from_peg, help_peg, to_peg):
+    if n == 1:
+        move_disk(from_peg, to_peg)
+    else:
+        hanoi(n-1, from_peg, to_peg, help_peg)
+        move_disk(from_peg, to_peg)
+        hanoi(n-1, help_peg, from_peg, to_peg)
+
+n = 4
+a = list(reversed(range(1, int(n) + 1)))
+b = [];
+c= [];
+
+print("[a]: ", a)
+print("[b]: ", b)
+print("[c]: ", c)
+hanoi(4, a, b, c)
+
+
+
+
+
